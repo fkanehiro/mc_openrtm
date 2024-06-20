@@ -36,8 +36,6 @@ except Exception:
 
 def connectComps():
     connectPorts(rh.port("q"), [sh.port("currentQIn")])
-    connectPorts(rh.port("gyrometer"), [kf.port("rate")])
-    connectPorts(rh.port("gsensor"), [kf.port("acc")])
     # for the kinematics mode
     if kinematics_mode == 1:
         connectPorts(sh.port("qOut"), rh.port("qIn"))
@@ -52,7 +50,7 @@ def connectComps():
 
 
 def createComps():
-    global ms, rh, rh_svc, sh, sh_svc, tk_svc, st, kf, log, log_svc, servo
+    global ms, rh, rh_svc, sh, sh_svc, tk_svc, st, log, log_svc, servo
     global ep_svc, mc, mc_svc
 
     rh = rtm.findRTC("RobotHardware0")
@@ -65,9 +63,6 @@ def createComps():
         servo = rtm.findRTC("PDcontroller0")
 
     ms = rtm.findRTCmanager()
-
-    ms.load("KalmanFilter")
-    kf = ms.create("KalmanFilter")
 
     ms.load("StateHolder")
     sh = ms.create("StateHolder")
@@ -82,9 +77,8 @@ def createComps():
     mc = ms.create("MCControl")
 
 def activateComps():
-    rtm.serializeComponents([rh, kf, log, mc, sh])
+    rtm.serializeComponents([rh, log, mc, sh])
     rh.start()
-    kf.start()
     sh.start()
     log.start()
     mc.start()
@@ -138,7 +132,6 @@ def connectMCControl():
     connectPorts(rh.port("rhsensor"), mc.port("RightHandForceSensor"))
     connectPorts(rh.port("lhsensor"), mc.port("LeftHandForceSensor"))
     connectPorts(sh.port("basePosOut"), mc.port("pIn"))
-    connectPorts(kf.port("rpy"), mc.port("rpyIn"))
     connectPorts(mc.port("qOut"), sh.port("qIn"))
     connectPorts(rh.port("waistAbsTransform"), mc.port("basePoseIn"))
     connectPorts(rh.port("waistAbsVelocity"), mc.port("baseVelIn"))

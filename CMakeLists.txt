@@ -29,6 +29,12 @@ project(${PROJECT_NAME} CXX)
 find_package(mc_rtc REQUIRED)
 add_required_dependency(hrpsys-base)
 
+execute_process(
+  COMMAND python3 -c "from distutils import sysconfig; print(sysconfig.get_config_var(\"VERSION\"))"
+  OUTPUT_VARIABLE PYTHON_VERSION
+  RESULT_VARIABLE PYTHON_VERSION_SUCCESS
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 omniidl_include_directories("idl")
 add_subdirectory(idl)
 

@@ -19,6 +19,7 @@
 #endif
 #include "MCControl.h"
 
+#include <sys/time.h>
 #include <fstream>
 #include <iomanip>
 
@@ -265,10 +266,11 @@ bool MCControl::setServoGains(const std::vector<double> & p_vec, const std::vect
       m_dgainsOut.data[i] = d_vec[i];
     }
 
-    coil::TimeValue coiltm(coil::gettimeofday());
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
     RTC::Time tm;
-    tm.sec = static_cast<CORBA::ULong>(coiltm.sec());
-    tm.nsec = static_cast<CORBA::ULong>(coiltm.usec()) * 1000;
+    tm.sec = static_cast<CORBA::ULong>(tv.tv_sec);
+    tm.nsec = static_cast<CORBA::ULong>(tv.tv_usec) * 1000;
     m_pgainsOut.tm = tm;
     m_dgainsOut.tm = tm;
     m_pgainsOutOut.write();
@@ -315,10 +317,11 @@ bool MCControl::setServoGainsByName(const std::string & jn, double p, double d)
       m_dgainsOut.data[i] = d_vec[i];
     }
 
-    coil::TimeValue coiltm(coil::gettimeofday());
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
     RTC::Time tm;
-    tm.sec = static_cast<CORBA::ULong>(coiltm.sec());
-    tm.nsec = static_cast<CORBA::ULong>(coiltm.usec()) * 1000;
+    tm.sec = static_cast<CORBA::ULong>(tv.tv_sec);
+    tm.nsec = static_cast<CORBA::ULong>(tv.tv_usec) * 1000;
     m_pgainsOut.tm = tm;
     m_dgainsOut.tm = tm;
     m_pgainsOutOut.write();
@@ -577,10 +580,11 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       qIn[i] = m_qIn.data[i];
     }
-    coil::TimeValue coiltm(coil::gettimeofday());
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
     RTC::Time tm;
-    tm.sec = static_cast<CORBA::ULong>(coiltm.sec());
-    tm.nsec = static_cast<CORBA::ULong>(coiltm.usec()) * 1000;
+    tm.sec = static_cast<CORBA::ULong>(tv.tv_sec);
+    tm.nsec = static_cast<CORBA::ULong>(tv.tv_usec) * 1000;
     controller.setSensorOrientation(Eigen::Quaterniond(mc_rbdyn::rpyToMat(rpyIn)).normalized());
     controller.setSensorPosition(pIn);
     controller.setSensorAngularVelocity(rateIn);

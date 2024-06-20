@@ -12,12 +12,14 @@
 #define MCCONTROL_H
 
 /** Work-around for C++17 while OpenRTM is not updated to remove the throw(...) specification */
+#if 0
 #if __cplusplus >= 201703L
 /** Include C++ headers that won't work well without the specification */
 #  include <iostream>
 #  include <optional>
 #  include <string>
 #  define throw(...)
+#endif
 #endif
 
 // clang-format off

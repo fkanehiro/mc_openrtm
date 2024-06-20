@@ -11,7 +11,7 @@ foreach(IDL ${IDLS})
   set(CPP_IDL_OUT "${CMAKE_CURRENT_BINARY_DIR}/${IDL}SK.cc")
   set(PYTHON_IDL_OUT "${CMAKE_CURRENT_BINARY_DIR}/${IDL}_idl.py")
   set_source_files_properties(FILES ${PYTHON_IDL_OUT} PROPERTIES GENERATED 1)
-  install(FILES ${PYTHON_IDL_OUT} DESTINATION "${HRPSYS_BASE_PREFIX}/lib/python2.7/dist-packages/hrpsys")
+  install(FILES ${PYTHON_IDL_OUT} DESTINATION "${HRPSYS_BASE_PREFIX}/lib/python${PYTHON_VERSION}/dist-packages/hrpsys")
 endforeach()
 
 add_custom_target(generate_mc_idl_cpp DEPENDS ${ALL_IDL_CPP_STUBS})
