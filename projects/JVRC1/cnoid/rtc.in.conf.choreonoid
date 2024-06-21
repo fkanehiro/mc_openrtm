@@ -1,4 +1,5 @@
 corba.nameservers: localhost:2809
+corba.endpoints: :2810
 naming.formats: %n.rtc
 logger.enable: YES
 logger.log_level: NORMAL
@@ -6,7 +7,6 @@ logger.file_name: stdout
 exec_cxt.periodic.type: ChoreonoidPeriodicExecutionContext
 exec_cxt.periodic.rate: 10
 manager.shutdown_onrtcs: NO
-manager.is_master: YES
 manager.refstring_path: /tmp/rtcmanager.ref
 manager.modules.load_path: @HRPSYS_BASE_PREFIX@/lib
 manager.modules.search_auto: YES
